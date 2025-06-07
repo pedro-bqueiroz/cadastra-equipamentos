@@ -1,0 +1,9 @@
+void adicionarEquipamento();
+void editarEquipamento();
+void removerEquipamento();
+void listarEquipamentos();
+void buscarPorFabricante();
+void listarEquipamentosEmUso();
+void listarEquipamentosDisponiveis();
+void salvarDadosEmArquivo();
+void carregarDadosDoArquivo();
