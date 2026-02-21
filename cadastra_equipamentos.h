@@ -30,5 +30,4 @@ void listarEquipamentosEmUso(Equipamentos vetor[], int *n, int nivelAcesso);
 void listarEquipamentosDisponiveis(Equipamentos vetor[], int *n, int nivelAcesso);
 void salvarDadosEmArquivo(Equipamentos vetor[], int *n, int nivelAcesso);
 void carregarDadosDoArquivo(Equipamentos vetor[], int *n, int nivelAcesso);
-void orcamentoReposicao(Equipamentos vetor[], int *n, int nivelAcesso);
 #endif
