@@ -26,7 +26,6 @@ int loginSenha(){ // Estabelece restrições de acesso a funções do programa
         }
         else {
             fprintf(stderr, "Opção inválida.\n");
-            break;
         }
 
     fprintf(stderr, "Erro ao abrir o arquivo. Peça assistência a um administrador.\n");
