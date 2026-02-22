@@ -1,7 +1,7 @@
 # Cadastra-Equipamentos
 
 A prototype digital management system designed to log equipment in an engineering laboratory.
-This program was developed by Pedro Queiroz and Ventura335 as an end-of-semester project, some time ago. 
+This program was developed by [Pedro Queiroz](https://github.com/pedro-bqueiroz) and [Ventura335](https://github.com/Ventura335) as an end-of-semester project, some time ago. 
 The original requirements and goals of the project were not that practical, therefore we revised the program to better fit with day-to-day demands. 
 Some functions are by far not the most efficient, and consume a ludicrous amount of memory in embedded devices, but we kept them because one of the requirements was to use everything we had learned at the time. 
 For the near future, it may be possible to integrate this system with a database (TBC), convert the .txt files to other formats, or create a graphical interface (using GTK+; don't expect it to look like something made with Qt).
