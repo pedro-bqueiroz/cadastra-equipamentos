@@ -62,7 +62,7 @@ int loginSenha(){ // Estabelece restrições de acesso a funções do programa
 
     while (fscanf(arq2, "%s %s %d", loginarq, senhaarq, &nivel) == 3) {
        if (strcmp(login, loginarq) == 0 && strcmp(senha, senhaarq) == 0) {
-            fprintf(stdout, "\nLogin: %s\tNível de acesso: %d\n", login, nivel);
+            fprintf(stdout, "\nLogin: %s\tNível de acesso: %d\n", nivel);
             fclose(arq2);
             return nivel;
         }
@@ -199,7 +199,6 @@ void modificarEquipamento(Equipamentos vetor[], int *n, int nivelAcesso){ // Ser
         cadastro->valor = valor;
         cadastro->t_specs.tensaoNominal = tensao;
         vetor[*n] = *cadastro; //define a posição n do vetor(ambos definidos no main) como o equipamento salvo.
-        (*n)++; //soma um ao n, indicando que outro equipamento foi adicionado ao sistema.
     }
     
     else if (confirmacao == 'n' || confirmacao == 'N'){
@@ -217,6 +216,7 @@ void modificarEquipamento(Equipamentos vetor[], int *n, int nivelAcesso){ // Ser
 void adicionarEquipamento(Equipamentos vetor[], int *n, int nivelAcesso){
     fprintf(stdout, "\nPara adicionar o equipamento, informe:\n");
     modificarEquipamento(vetor, n, nivelAcesso);
+    (*n)++; //soma um ao n, indicando que outro equipamento foi adicionado ao sistema.
     fprintf(stdout, "\nVocê adicionou o equipamento %d.\n", *n);
     return;
 }
@@ -225,19 +225,22 @@ void editarEquipamento(Equipamentos vetor[], int *n, int nivelAcesso){
     int numero;
     char confirmacao;
     
+    listarEquipamentos(vetor, n, nivelAcesso);
+    
     if (*n == 0) {
-        printf("\nNão há equipamentos a serem editados.\n");
+        fprintf(stdout, "\nNão há equipamentos a serem editados.\n");
         return;
     }
 
     printf("\nQual o número do equipamento que você quer editar?\n");
     scanf("%i", &numero);
+    numero -=1; //atualiza o índice do equipamento no vetor
+
     printf("\nPara editar o equipamento, informe:\n");
 
-    modificarEquipamento(vetor, n, nivelAcesso); 
+    modificarEquipamento(vetor, numero, nivelAcesso); 
     
-    numero -=1; //atualiza o índice do equipamento no vetor
-    fprintf(stdout,"O número atual do equipamento %d é %d.", numero+1, numero);
+    fprintf(stdout,"Você editou o equipamento %d.", numero+1);
     return;
 }
 
