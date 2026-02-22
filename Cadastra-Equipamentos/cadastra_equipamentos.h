@@ -5,7 +5,7 @@
 typedef struct {
     char tipo[MAX_TAM]; // Categoria do equipamento. Exemplos: "Fonte", "Multímetro"
     float tensaoNominal; // Tensão nominal do equipamento, em Volts
-    float correnteMaxima; // Corrente de curto-circuito do aparelho, em Amperes
+    float correnteMaxima; // Corrente máxima do aparelho, em Amperes
     float Potencia; // Consumo estimado de energia do aparelho, em Watts
 }EspecificacoesTecnicas;
 
