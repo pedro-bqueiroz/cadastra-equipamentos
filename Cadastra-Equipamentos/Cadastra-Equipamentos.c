@@ -6,21 +6,21 @@
 
 int main(int argc, char *argv[]) {
     setlocale(LC_ALL, "Portuguese"); // Configura a localidade para Português do Brasil, garantindo a exibição correta de caracteres acentuados.
-    system("cls || clear"); // útil para limpar a tela em sistemas Windows e Unix, respectivamente.
+    system("cls || clear"); // Útil para limpar a tela em sistemas Windows e Unix, respectivamente.
 
-    FILE *arq = fopen("equipamentos.txt", "r"); // será feito um teste de existência do arquivo.
-    int n=0; //variável que vai fazer a contagem de quantos equipamentos estão cadastrados, importante para se usar nos loops.
+    FILE *arq = fopen("equipamentos.txt", "r"); // Será feito um teste de existência do arquivo.
+    int n=0; // Variável que vai fazer a contagem de quantos equipamentos estão cadastrados, importante para se usar nos loops.
     int confirmacao;
-    Equipamentos vetor[256]; //Vetor responsável por armazenar os equipamentos já cadastrados.
+    Equipamentos vetor[256]; // Vetor responsável por armazenar os equipamentos já cadastrados.
 
-    int nivelAcesso = loginSenha();
+    int nivelAcesso = loginSenha(); // Será feita a autenticação por meio da função. Caso haja algum erro grave, o programa fecha.
     if (nivelAcesso == -1) {
         return 0;
     }
 
     fprintf(stdout, "\nBem vindo ao Cadastra-Equipamentos.\nCertifique-se de que fechou o programa quando for embora!!!\n");
 
-    while (arq == NULL){ //testa se o arquivo existe ou não
+    while (arq == NULL){ // Possibilita a criação de arquivo. TBC se será possível criar mais arquivos
         fprintf(stderr, "ATENÇÃO! Não há arquivo .txt a ser aberto. Deseja criar um? S/N ");
         scanf("\n%c", &confirmacao);
         if (confirmacao == 'n' || confirmacao == 'N'){
@@ -99,3 +99,4 @@ int main(int argc, char *argv[]) {
         }
     } while (input != 'c' && input != 'C');
 }
+
