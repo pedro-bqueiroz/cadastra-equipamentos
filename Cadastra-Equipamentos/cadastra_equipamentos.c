@@ -88,7 +88,7 @@ void listarUsuarios(int nivelAcesso){
     int niv = 0;
     char login[MAX_TAM], senha[MAX_TAM];
 
-    if (nivelAcesso < 2) {
+    if (nivelAcesso < 1) {
         fprintf(stderr, "\nAcesso negado. Nível de acesso insuficiente.\n");
         return;
     }
@@ -260,10 +260,10 @@ void removerEquipamento(Equipamentos vetor[], int *n, int nivelAcesso){
     
     if (*n > 0){
         fprintf(stdout, "\nQual dos equipamentos voce quer excluir?\n");
-        recursao(vetor, numero, *n);
-        *n-=1; //elemento excluído.
         scanf("%i", &numero); //Define o equipamento a ser excluído
         numero -= 1; //Ajusta o valor escolhido para um index no vetor
+        recursao(vetor, numero, *n);
+        *n-=1; //elemento excluído.
     }
 }
 
