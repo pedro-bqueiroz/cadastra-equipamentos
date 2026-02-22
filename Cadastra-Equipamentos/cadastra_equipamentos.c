@@ -43,7 +43,7 @@ int loginSenha(){ // Estabelece restrições de acesso a funções do programa
         fprintf(stderr, "Login muito longo. Tente novamente.\n");
         return 0;
     }
-
+    
     login[strcspn(login, "\r\n")] = 0;
     if (strcmp(login, "ICE CREAM") == 0){
         fprintf(stdout, "Bem vindo, administrador.\n");
@@ -62,7 +62,7 @@ int loginSenha(){ // Estabelece restrições de acesso a funções do programa
 
     while (fscanf(arq2, "%s %s %d", loginarq, senhaarq, &nivel) == 3) {
        if (strcmp(login, loginarq) == 0 && strcmp(senha, senhaarq) == 0) {
-            fprintf(stdout, "Nível de acesso: %d\n", nivel);
+            fprintf(stdout, "\nLogin: %s\tNível de acesso: %d\n", nivel);
             fclose(arq2);
             return nivel;
         }
