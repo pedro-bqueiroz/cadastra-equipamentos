@@ -62,7 +62,7 @@ int loginSenha(){ // Estabelece restrições de acesso a funções do programa
 
     while (fscanf(arq2, "%s %s %d", loginarq, senhaarq, &nivel) == 3) {
        if (strcmp(login, loginarq) == 0 && strcmp(senha, senhaarq) == 0) {
-            fprintf(stdout, "\nLogin: %s\tNível de acesso: %d\n", nivel);
+            fprintf(stdout, "\nLogin: %s\tNível de acesso: %d\n", login, nivel);
             fclose(arq2);
             return nivel;
         }
