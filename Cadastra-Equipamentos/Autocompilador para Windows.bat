@@ -2,4 +2,4 @@
 gcc -c cadastra_equipamentos.c
 gcc cadastra_equipamentos.o Cadastra-Equipamentos.c -o Cadastra-Equipamentos.exe
 start Cadastra-Equipamentos.exe
-pause :: Útil para avisar sobre possíveis erros de compilação, mas a janela do terminal fica aberta. Coloque pause depois dos 4 pontos para fechar a janela automaticamente 
+pause & :: Útil para avisar sobre possíveis erros de compilação, mas a janela do terminal fica aberta. Coloque pause depois dos 4 pontos para fechar a janela automaticamente 
