@@ -1,4 +1,4 @@
-# cadastra-equipamentos
+# Cadastra-Equipamentos
 
 A prototype digital management system designed to log equipment in an engineering laboratory.
 This program was developed by Pedro Queiroz and Ventura335 as an end-of-semester project, some time ago. 
