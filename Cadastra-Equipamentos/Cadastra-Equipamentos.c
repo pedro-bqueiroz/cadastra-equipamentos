@@ -11,7 +11,7 @@ int main(int argc, char *argv[]) {
     FILE *arq = fopen("equipamentos.txt", "r"); // Será feito um teste de existência do arquivo.
     int n=0; // Variável que vai fazer a contagem de quantos equipamentos estão cadastrados, importante para se usar nos loops.
     int confirmacao;
-    Equipamentos vetor[256]; // Vetor responsável por armazenar os equipamentos já cadastrados.
+    Equipamentos vetor[MAX_EQUIPAMENTOS]; // Vetor responsável por armazenar os equipamentos já cadastrados.
 
     int nivelAcesso = loginSenha(); // Será feita a autenticação por meio da função. Caso haja algum erro grave, o programa fecha.
     if (nivelAcesso == -1) {
@@ -99,4 +99,5 @@ int main(int argc, char *argv[]) {
         }
     } while (input != 'c' && input != 'C');
 }
+
 
