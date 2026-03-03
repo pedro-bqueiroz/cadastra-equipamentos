@@ -5,7 +5,7 @@
 typedef struct {
     char tipo[MAX_TAM]; // Categoria do equipamento. Exemplos: "Fonte", "Multímetro"
     float tensaoNominal; // Tensão nominal do equipamento, em Volts
-    float correnteMaxima; // Corrente máxima do aparelho, em Amperes
+    float correnteMaxima; // Corrente de curto-circuito do aparelho, em Amperes
     float Potencia; // Consumo estimado de energia do aparelho, em Watts
 }EspecificacoesTecnicas;
 
@@ -24,6 +24,7 @@ void modificarEquipamento(Equipamentos vetor[], int *n, int nivelAcesso);
 void adicionarEquipamento(Equipamentos vetor[], int *n, int nivelAcesso);
 void editarEquipamento(Equipamentos vetor[], int *n, int nivelAcesso);
 void removerEquipamento(Equipamentos vetor[], int *n, int nivelAcesso);
+int lista(int j);
 void listarEquipamentos(Equipamentos vetor[], int *n, int nivelAcesso);
 void buscarPorFabricante(Equipamentos vetor[], int *n, int nivelAcesso);
 void listarEquipamentosEmUso(Equipamentos vetor[], int *n, int nivelAcesso);
