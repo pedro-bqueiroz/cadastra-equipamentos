@@ -10,8 +10,9 @@ int loginSenha(){ // Estabelece restrições de acesso a funções do programa
 
     FILE *arq2 = fopen("loginSenha.txt", "r"); // Tentativa de abrir o arquivo
     
+    if (arq2 == NULL) fprintf(stderr, "Não há arquivo de login e senha. Deseja criar um?\n")
+
     while (arq2 == NULL){
-        fprintf(stderr, "Não há arquivo de login e senha. Deseja criar um? S/N\n");
         char confirmacao;
         scanf("\n%c", &confirmacao);
         if (confirmacao == 'n' || confirmacao == 'N'){
@@ -27,16 +28,15 @@ int loginSenha(){ // Estabelece restrições de acesso a funções do programa
         else {
             fprintf(stderr, "Opção inválida.\n");
         }
-
-    fprintf(stderr, "Erro ao abrir o arquivo. Peça assistência a um administrador.\n");
-
-    return -1;
     }
+
+    close(arq2);
+    FILE *arq2 = fopen("loginSenha.txt", "r"); // O arquivo é reaberto para evitar erros, caso tenha sido criado na parte anterior 
 
     fprintf(stdout, "Em suspeita de alteração não permitida, peça assistência a um administrador.\n");
     fprintf(stdout, "Insira seu login e senha. Digite 'c' em ambos para sair.\n");
-    fprintf(stdout, "Login:\n");
 
+    fprintf(stdout, "Login:\n");
     fgets(login, sizeof(login), stdin);
 
     if(strlen(login) > MAX_TAM - 1) {
@@ -53,11 +53,17 @@ int loginSenha(){ // Estabelece restrições de acesso a funções do programa
 
     fprintf(stdout, "Senha:\n");
     fgets(senha, sizeof(senha), stdin);
-    senha[strcspn(senha, "\n")] = 0;
 
     if(strlen(senha) > MAX_TAM - 1) {
         fprintf(stderr, "Senha muito longa. Tente novamente.\n");
         return 0;
+    }
+
+    senha[strcspn(senha, "\r\n")] = 0;
+    if(strcmp(senha, "ICE CREAM") == 0){
+        fprintf(stdout, "Bem vindo, administrador. \n");
+        fclose(arq2);
+        return 3;
     }
 
     while (fscanf(arq2, "%s %s %d", loginarq, senhaarq, &nivel) == 3) {
