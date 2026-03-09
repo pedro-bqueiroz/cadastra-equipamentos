@@ -20,15 +20,14 @@ typedef struct {
 int loginSenha();
 int configurarLoginSenha(int nivelAcesso);
 void listarUsuarios(int nivelAcesso);
-void modificarEquipamento(Equipamentos vetor[], int *n, int nivelAcesso);
+void modificarEquipamento(Equipamentos vetor[], int index, int nivelAcesso);
 void adicionarEquipamento(Equipamentos vetor[], int *n, int nivelAcesso);
 void editarEquipamento(Equipamentos vetor[], int *n, int nivelAcesso);
 void removerEquipamento(Equipamentos vetor[], int *n, int nivelAcesso);
-int lista(int j);
+int lista(Equipamentos vetor[], int j);
 void listarEquipamentos(Equipamentos vetor[], int *n, int nivelAcesso);
 void buscarPorFabricante(Equipamentos vetor[], int *n, int nivelAcesso);
-void listarEquipamentosEmUso(Equipamentos vetor[], int *n, int nivelAcesso);
-void listarEquipamentosDisponiveis(Equipamentos vetor[], int *n, int nivelAcesso);
+void listarEquipamentosPorUso(Equipamentos vetor[], int *n, int nivelAcesso);
 void salvarDadosEmArquivo(Equipamentos vetor[], int *n, int nivelAcesso);
 void carregarDadosDoArquivo(Equipamentos vetor[], int *n, int nivelAcesso);
 #endif
