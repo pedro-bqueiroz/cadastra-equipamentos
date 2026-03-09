@@ -10,11 +10,11 @@ int loginSenha(){ // Estabelece restrições de acesso a funções do programa
 
     FILE *arq2 = fopen("loginSenha.txt", "r"); // Tentativa de abrir o arquivo
     
-    if (arq2 == NULL) fprintf(stderr, "Não há arquivo de login e senha. Deseja criar um?\n")
+    if (arq2 == NULL) fprintf(stderr, "Não há arquivo de login e senha. Deseja criar um?\n");
 
     while (arq2 == NULL){
         char confirmacao;
-        scanf("\n%c", &confirmacao);
+        scanf(" \n%c", &confirmacao);
         if (confirmacao == 'n' || confirmacao == 'N'){
             fprintf(stdout, "Saindo do Cadastra-Equipamentos...");
             return -1;
@@ -30,13 +30,13 @@ int loginSenha(){ // Estabelece restrições de acesso a funções do programa
         }
     }
 
-    close(arq2);
-    FILE *arq2 = fopen("loginSenha.txt", "r"); // O arquivo é reaberto para evitar erros, caso tenha sido criado na parte anterior 
+    fclose(arq2);
+    arq2 = fopen("loginSenha.txt", "r"); // O arquivo é reaberto para evitar erros, caso tenha sido criado na parte anterior 
 
     fprintf(stdout, "Em suspeita de alteração não permitida, peça assistência a um administrador.\n");
     fprintf(stdout, "Insira seu login e senha. Digite 'c' em ambos para sair.\n");
 
-    fprintf(stdout, "Login:\n");
+    fprintf(stdout, "\nLogin:\n");
     fgets(login, sizeof(login), stdin);
 
     if(strlen(login) > MAX_TAM - 1) {
@@ -51,7 +51,7 @@ int loginSenha(){ // Estabelece restrições de acesso a funções do programa
         return 3;
     }
 
-    fprintf(stdout, "Senha:\n");
+    fprintf(stdout, "\nSenha:\n");
     fgets(senha, sizeof(senha), stdin);
 
     if(strlen(senha) > MAX_TAM - 1) {
@@ -72,11 +72,11 @@ int loginSenha(){ // Estabelece restrições de acesso a funções do programa
             fclose(arq2);
             return nivel;
         }
-        if (login == "c" || login == "C"){
+        else if (login == "c" || login == "C"){
             nivel = 0;
             break;
         }
-        fprintf(stderr, "Login ou senha incorretos. Tente novamente.\n");
+        else fprintf(stderr, "Login ou senha incorretos. Tente novamente.\n");
     }
 
     fclose(arq2);
@@ -108,7 +108,7 @@ void listarUsuarios(int nivelAcesso){
 
     while (fscanf(arq2, "%s %s %d", login, senha, &niv) == 3) {
         if (nivelAcesso < niv) {
-            fprintf(stdout, "\nLogin: %s\tSenha: %s\t*\t", login, senha);
+            fprintf(stdout, "\nLogin: %s\tSenha: %s\t Nível: *\t", login, senha);
             continue;
         } else {
             fprintf(stdout, "\nLogin: %s\tSenha: %s\t Nível: %d\t", login, senha, niv);
@@ -118,7 +118,7 @@ void listarUsuarios(int nivelAcesso){
     fclose(arq2);
 }
 
-void modificarEquipamento(Equipamentos vetor[], int *n, int nivelAcesso){ // Será chamada em adicionarEquipamento() ou editarEquipamento(). O nível de acesso é verificado aqui, e não nas outras duas.
+void modificarEquipamento(Equipamentos vetor[], int index, int nivelAcesso){ // Será chamada em adicionarEquipamento() ou editarEquipamento(). O nível de acesso é verificado aqui, e não nas outras duas.
     Equipamentos *cadastro = (Equipamentos *) malloc (sizeof(Equipamentos));
     char confirmacao;
     int ano, utilizacao, codigo;
@@ -127,7 +127,7 @@ void modificarEquipamento(Equipamentos vetor[], int *n, int nivelAcesso){ // Ser
     char tipo[MAX_TAM], nome[MAX_TAM], fabricante[MAX_TAM], serie[MAX_TAM];
 
     fprintf(stdout, "Código do equipamento, entre 0 e 99999: ");
-    scanf("%d", &codigo);
+    scanf(" %d", &codigo);
     if (codigo < 0 || codigo > 99999) {
         fprintf(stderr, "Código inválido!\n");
         free(cadastro);
@@ -143,9 +143,9 @@ void modificarEquipamento(Equipamentos vetor[], int *n, int nivelAcesso){ // Ser
     fgets(fabricante, sizeof(fabricante), stdin);
     fabricante[strcspn(fabricante, "\r\n")] = 0;
 
-    fprintf(stdout, "Ano de fabricação: ");
-    scanf("%d", &ano);
-    if (ano < 0 || ano > 9999) {
+    fprintf(stdout, "Ano de fabricação (entre -9999 e 9999): ");
+    scanf(" %d", &ano);
+    if (ano < -9999 || ano > 9999) {
         fprintf(stderr, "Ano inválido!\n");
         free(cadastro);
         return;
@@ -153,7 +153,7 @@ void modificarEquipamento(Equipamentos vetor[], int *n, int nivelAcesso){ // Ser
     getchar();
 
     fprintf(stdout, "Utilização (digite 0 caso desocupado ou 1 caso ocupado): ");
-    scanf("%d", &utilizacao);
+    scanf(" %d", &utilizacao);
     if (utilizacao != 0 && utilizacao != 1) {
         fprintf(stderr, "Valor inválido!\n");
         free(cadastro);
@@ -162,7 +162,7 @@ void modificarEquipamento(Equipamentos vetor[], int *n, int nivelAcesso){ // Ser
     while(getchar() != '\n');
 
     fprintf(stdout, "Valor de mercado (em Reais, com ponto): ");
-    scanf("%f", &valor);
+    scanf(" %f", &valor);
     while(getchar() != '\n');
 
     fprintf(stdout, "Número de série: ");
@@ -174,19 +174,19 @@ void modificarEquipamento(Equipamentos vetor[], int *n, int nivelAcesso){ // Ser
     tipo[strcspn(tipo, "\r\n")] = 0;
 
     fprintf(stdout, "Tensão (em Volts): "); 
-    scanf("%f", &tensao);
+    scanf(" %f", &tensao);
     while(getchar() != '\n');
 
     fprintf(stdout, "Corrente (em Amperes): ");
-    scanf("%f", &corrente);
+    scanf(" %f", &corrente);
     while(getchar() != '\n');
 
     fprintf(stdout, "Potência (em Watts): ");
-    scanf("%f", &Potencia);
+    scanf(" %f", &Potencia);
 
     fprintf(stdout, "\nConfirma? S/N\n");
 
-    scanf(" %c", &confirmacao);
+    scanf("  %c", &confirmacao);
 
     if (confirmacao == 's' || confirmacao == 'S'){
         cadastro->codigo = codigo;
@@ -200,7 +200,7 @@ void modificarEquipamento(Equipamentos vetor[], int *n, int nivelAcesso){ // Ser
         strcpy(cadastro->serie, serie);
         cadastro->valor = valor;
         cadastro->t_specs.tensaoNominal = tensao;
-        vetor[*n] = *cadastro; //define a posição n do vetor(ambos definidos no main) como o equipamento salvo.
+        vetor[index] = *cadastro; //define a posição n do vetor(ambos definidos no main) como o equipamento salvo.
     }
     
     else if (confirmacao == 'n' || confirmacao == 'N'){
@@ -223,7 +223,7 @@ void adicionarEquipamento(Equipamentos vetor[], int *n, int nivelAcesso){
 
     fprintf(stdout, "\nPara adicionar o equipamento, informe:\n");
 
-    modificarEquipamento(vetor, n, nivelAcesso);
+    modificarEquipamento(vetor, *n, nivelAcesso);
 
     (*n)++; //soma um ao n, indicando que outro equipamento foi adicionado ao sistema.
     fprintf(stdout, "\nVocê adicionou o equipamento %d.\n", *n);
@@ -248,7 +248,7 @@ void editarEquipamento(Equipamentos vetor[], int *n, int nivelAcesso){
     }
 
     printf("\nQual o número do equipamento que você quer editar?\n");
-    scanf("%i", &numero);
+    scanf(" %i", &numero);
     numero -=1; //atualiza o índice do equipamento no vetor
 
     printf("\nPara editar o equipamento, informe:\n");
@@ -260,7 +260,7 @@ void editarEquipamento(Equipamentos vetor[], int *n, int nivelAcesso){
 }
 
 void recursao(Equipamentos vetor[], int num, int n){ // Função recursiva usada em removerEquipamento().
-    if (num >= (n-1)) return;
+    if (num >= n) return;
     vetor[num] = vetor[num+1];
     recursao(vetor, num+1, n); //Desloca, para a esquerda, os valores a partir do index escolhido, assim, alterando a disposição dos elementos.
 }
@@ -270,20 +270,34 @@ void removerEquipamento(Equipamentos vetor[], int *n, int nivelAcesso){
         fprintf(stderr, "Acesso negado. Nível de acesso insuficiente.\n");
         return;
     }
+
     int numero;
+    char confirma;
+
     listarEquipamentos(vetor, n, nivelAcesso);
     
     if (*n > 0){
-        fprintf(stdout, "\nQual dos equipamentos voce quer excluir?\n");
-        scanf("%i", &numero); //Define o equipamento a ser excluído
-        numero -= 1; //Ajusta o valor escolhido para um index no vetor
+        fprintf(stdout, "\nQual dos equipamentos você quer excluir?\n");
+        scanf(" %i", &numero); //Define o equipamento a ser excluído
+        fprintf(stdout, "\nTem certeza de que quer excluir o equipamento %d? Digite 's' caso positivo, 'n' caso negativo. ", numero);
+        scanf(" %c", &confirma);
+
+        if (confirma == 'n' || confirma == 'N') return;
+
+        if (confirma == 's' || confirma == 'S'){
+        numero--; //Ajusta o valor para o index à esquerda no vetor
         recursao(vetor, numero, *n);
         *n-=1; //elemento excluído.
+        fprintf(stdout, "\nEquipamento %d excluído", numero + 1);
+        }
+
     }
+
+    return;
 }
 
 int lista(Equipamentos vetor[], int j){
-    for (int i = 0; i < *n; i++) {
+    for (int i = 0; i < j; i++) {
         fprintf(stdout, "\n-------- Equipamento %d --------\n\n", i+1);
         fprintf(stdout, "\tCodigo: %d\n", vetor[i].codigo);
         fprintf(stdout, "\tNome: %s\n", vetor[i].nome);
@@ -295,7 +309,6 @@ int lista(Equipamentos vetor[], int j){
         fprintf(stdout, "\tVoltagem de operacao: %.2f V\n", vetor[i].t_specs.tensaoNominal);
         fprintf(stdout, "\tCorrente maxima: %.2f A\n", vetor[i].t_specs.correnteMaxima);
         fprintf(stdout, "\tConsumo: %.2f W\n", vetor[i].t_specs.Potencia);
-        j +=1;
     }
 
     return j;
@@ -308,15 +321,15 @@ void listarEquipamentos(Equipamentos vetor[], int *n, int nivelAcesso){
     }
 
     if (*n == 0) {
-        fprintf(stdout, "\nSem equipamentos cadastrados\n");
+        fprintf(stdout, "\nSem equipamentos cadastrados.\n");
         return;
     }
 
-    int j = 0;
+    int j = *n;
 
     fprintf(stdout, "\n-Lista de equipamentos:-\n");
 
-    lista(j);
+    lista(vetor, j);
 
     //caso o valor de n seja 0 significa que não há elementos no vetor, logo não há equipamentos cadastrados
     if (*n == 0) fprintf(stdout, "\nNenhum equipamento cadastrado\n");
@@ -338,7 +351,7 @@ void buscarPorFabricante(Equipamentos vetor[], int *n, int nivelAcesso){
     }
 
     fprintf(stdout, "\nDigite o fabricante ");
-    scanf("%s", fab);
+    scanf( "%s", fab);
     //Percorre o vetor de equipamentos
     for (int j = 0; j < *n; j++) {
         if (strcmp(fab, vetor[j].fabricante) == 0){
@@ -353,15 +366,15 @@ void buscarPorFabricante(Equipamentos vetor[], int *n, int nivelAcesso){
     //percorre o vetor para mostrar na tela todos os equipamentos condizentes com o fabricante procurado.
     for (int i = 0; i < t; i++) { 
         fprintf(stdout, "\n-------- Equipamento %d --------\n\n", i+1);
-        fprintf(stdout, "\tCodigo: %d\n", vetor[i].codigo);
+        fprintf(stdout, "\tCódigo: %d\n", vetor[i].codigo);
         fprintf(stdout, "\tNome: %s\n", vetor[i].nome);
         fprintf(stdout, "\tAno: %d\n", vetor[i].ano);
         fprintf(stdout, "\tUtilização: %d\n", vetor[i].utilizacao);
         fprintf(stdout, "\tValor: %.2f\n", vetor[i].valor);
-        fprintf(stdout, "\tNumero de serie: %s\n", vetor[i].serie);
+        fprintf(stdout, "\tNúmero de série: %s\n", vetor[i].serie);
         fprintf(stdout, "\tTipo: %s\n", vetor[i].t_specs.tipo);
-        fprintf(stdout, "\tVoltagem de operacao: %.2f V\n", vetor[i].t_specs.tensaoNominal);
-        fprintf(stdout, "\tCorrente maxima: %.2f A\n", vetor[i].t_specs.correnteMaxima);
+        fprintf(stdout, "\tTensão de operação: %.2f V\n", vetor[i].t_specs.tensaoNominal);
+        fprintf(stdout, "\tCorrente máxima: %.2f A\n", vetor[i].t_specs.correnteMaxima);
         fprintf(stdout, "\tConsumo: %.2f W\n", vetor[i].t_specs.Potencia);
     }
 
@@ -371,46 +384,42 @@ void buscarPorFabricante(Equipamentos vetor[], int *n, int nivelAcesso){
     }
 }
 
-void listarEquipamentosEmUso(Equipamentos vetor[], int *n, int nivelAcesso){
+void listarEquipamentosPorUso(Equipamentos vetor[], int *n, int nivelAcesso){
     if (nivelAcesso < 1) {
         fprintf(stderr, "Acesso negado. Nível de acesso insuficiente.\n");
         return;
     }
 
     int j=0; //j é controle, caso seja 0 não há elementos em uso
-    
+    int i, confirma;
+
     if (*n == 0) {
         fprintf(stdout, "\nSem equipamentos cadastrados\n");
         return;
     }
 
-    fprintf(stdout, "\n- Produto(s) em uso -\n");
+    fprintf(stdout, "Deseja listar quais equipamentos?\n0) Disponíveis\n1) Ocupados");
+    scanf(" %d", &confirma);
 
-    if (vetor[i].utilizacao == 1){ //verifica se o equipamento, em cada posição do vetor, está em uso.
-    lista(j);
+    if (confirma == 0){
+        for (i = 0; i < *n; i++){
+            if (vetor[i].utilizacao = 0){
+            fprintf(stdout, "\n- Produto(s) disponíveis: -\n");
+            lista(vetor, j);
+            }
+        }
     }
-
-    j == 0 ? fprintf(stdout, "\nNenhum produto em uso\n") : return;
-}
-
-void listarEquipamentosDisponiveis(Equipamentos vetor[], int *n, int nivelAcesso){
-    if (nivelAcesso < 1) {
-        fprintf(stderr, "Acesso negado. Nível de acesso insuficiente.\n");
-        return;
+    else if (confirma == 0){
+        for (i = 0; i < *n; i++){
+            if (vetor[i].utilizacao = 1){
+            fprintf(stdout, "\n- Produto(s) em uso: -\n");
+            lista(vetor, j);
+            }
+        }
     }
-    
-    int j=0;
+    else fprintf(stderr, "Opção inválida");
 
-    if (*n == 0) {
-        fprintf(stdout, "\nSem equipamentos cadastrados\n");
-        return ;
-    }
-
-    fprintf(stdout, "\n-produto(s) livre(s)-\n");
-
-    if (vetor[i].utilizacao == 0) lista(j);
-
-    j = 0 ? fprintf(stdout, "\nNenhum produto livre\n") : return;
+    return;
 }
 
 void salvarDadosEmArquivo(Equipamentos vetor[], int *n, int nivelAcesso){
@@ -424,11 +433,11 @@ void salvarDadosEmArquivo(Equipamentos vetor[], int *n, int nivelAcesso){
 
     if (arq == NULL) {
         fprintf(stderr, "Erro ao abrir o arquivo");
-    }
-    else {
+    } else {
         // Lê o arquivo, caso exista, e salva todos os equipamentos do vetor no arquivo em questão,
         for (int i = 0; i < *n; i++) { 
-            fprintf(arq, "%d %s %s %d %d %.2f %s %s %.2f %.2f %.2f\n", vetor[i].codigo, vetor[i].nome, vetor[i].fabricante, vetor[i].ano, vetor[i].utilizacao, vetor[i].valor, vetor[i].serie, vetor[i].t_specs.tipo, vetor[i].t_specs.tensaoNominal, vetor[i].t_specs.correnteMaxima, vetor[i].t_specs.Potencia);
+            fprintf(arq, "%d %s %s %d %d %.2f %s %s %.2f %.2f %.2f\n", vetor[i].codigo, vetor[i].nome, vetor[i].fabricante, vetor[i].ano, vetor[i].utilizacao, 
+                vetor[i].valor, vetor[i].serie, vetor[i].t_specs.tipo, vetor[i].t_specs.tensaoNominal, vetor[i].t_specs.correnteMaxima, vetor[i].t_specs.Potencia);
         }
     }
 
@@ -442,6 +451,7 @@ void carregarDadosDoArquivo(Equipamentos vetor[], int *n, int nivelAcesso){
         return;
     }
 
+    int i = 0;
     const char *nome = "equipamentos.txt";
     FILE *arq = fopen(nome, "r");
 
@@ -450,16 +460,17 @@ void carregarDadosDoArquivo(Equipamentos vetor[], int *n, int nivelAcesso){
         return;
     }
 
-    else {
-        int j = 0;
-
+    else {  
         while (fscanf(arq, "%d %s %s %d %d %f %s %s %f %f %f", &vetor[i].codigo,vetor[i].nome,vetor[i].fabricante,&vetor[i].ano,&vetor[i].utilizacao,&vetor[i].valor,
                 vetor[i].serie,vetor[i].t_specs.tipo,&vetor[i].t_specs.tensaoNominal,&vetor[i].t_specs.correnteMaxima,&vetor[i].t_specs.Potencia) == 11) {
-            lista(j);
+                i++;
         }
 
-        if (*n == 0 && j != 0) { //verifica se é a primeira execução, pois o valor de n é definido em 0 e caso j seja 0 significa que não há nada, logo não há necessidade de salvar.
-            *n = j; //define o número de equipamentos presentes no sistema
+        lista(vetor, i);
+
+        if (*n == 0 && i != 0) { //verifica se é a primeira execução, pois o valor de n é definido em 0 e caso j seja 0 significa que não há nada, logo não há necessidade de salvar.
+            *n = i; //define o número de equipamentos presentes no sistema
+            fclose(arq);
             return;
         }
     }
