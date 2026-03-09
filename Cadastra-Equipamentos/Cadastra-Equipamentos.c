@@ -47,12 +47,11 @@ int main(int argc, char *argv[]) {
         fprintf(stdout, "3) Remover equipamento\n");
         fprintf(stdout, "4) Listar equipamentos\n");
         fprintf(stdout, "5) Buscar por fabricante\n");
-        fprintf(stdout, "6) Listar equipamentos em uso\n");
-        fprintf(stdout, "7) Listar equipamentos disponiveis\n");
-        fprintf(stdout, "8) Salvar dados em arquivo\n");
-        fprintf(stdout, "9) Carregar dados do arquivo\n");
-        fprintf(stdout, "0) Configurações de login e senha\n");
-        fprintf(stdout, "Q) Listar usuários\n");
+        fprintf(stdout, "6) Listar equipamentos por uso\n");
+        fprintf(stdout, "7) Salvar dados em arquivo\n");
+        fprintf(stdout, "8) Carregar dados do arquivo\n");
+        fprintf(stdout, "9) Configurações de login e senha\n");
+        fprintf(stdout, "0) Listar usuários\n");
         fprintf(stdout, "C) Sair do programa\n\n");
 
         scanf(" %c", &input);
@@ -73,22 +72,18 @@ int main(int argc, char *argv[]) {
                 buscarPorFabricante(vetor, &n, nivelAcesso);
                 break;
             case '6':
-                listarEquipamentosEmUso(vetor, &n, nivelAcesso);
+                listarEquipamentosPorUso(vetor, &n, nivelAcesso);
                 break;
             case '7':
-                listarEquipamentosDisponiveis(vetor, &n, nivelAcesso);
-                break;
-            case '8':
                 salvarDadosEmArquivo(vetor, &n, nivelAcesso);
                 break;
-            case '9':
+            case '8':
                 carregarDadosDoArquivo(vetor, &n, nivelAcesso);
                 break;
-            case '0':
+            case '9':
                 configurarLoginSenha(nivelAcesso);
                 break;
-            case 'q':
-            case 'Q':
+            case '0':
                 listarUsuarios(nivelAcesso);
                 break;
             case 'c':
