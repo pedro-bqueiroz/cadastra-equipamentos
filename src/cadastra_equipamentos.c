@@ -296,7 +296,7 @@ int modificarEquipamento(Equipamentos vetor[], int index, int nivelAcesso){ // S
 
     fprintf(stdout, "\nConfirma? S/N\n");
 
-    scanf("  %c", &confirmacao);
+    scanf(" %c", &confirmacao);
 
     if (confirmacao == 's' || confirmacao == 'S'){
         cadastro->codigo = codigo;
