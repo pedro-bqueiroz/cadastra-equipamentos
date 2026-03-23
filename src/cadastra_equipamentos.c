@@ -509,7 +509,7 @@ void listarEquipamentosPorUso(Equipamentos vetor[], int *n, int nivelAcesso){
             lista(vetor, j);
             }
         }
-    } else if (confirma == 0){
+    } else if (confirma == 1){
         for (i = 0; i < *n; i++){
             if (vetor[i].utilizacao = 1){
             fprintf(stdout, "\n- Produto(s) em uso: -\n");
