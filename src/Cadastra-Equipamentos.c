@@ -28,12 +28,10 @@ int main(int argc, char *argv[]) {
         if (confirmacao == 'n' || confirmacao == 'N'){
         fprintf(stdout, "Saindo do Cadastra-Equipamentos...");
         return 0;
-        }
-        else if (confirmacao == 's' || confirmacao == 'S'){
+        } else if (confirmacao == 's' || confirmacao == 'S'){
         arq = fopen("equipamentos.txt", "w");
         fclose(arq);
-        }
-        else {
+        } else {
         fprintf(stderr, "Opção inválida.\n");
         }
     }
