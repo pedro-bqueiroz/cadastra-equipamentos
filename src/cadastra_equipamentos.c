@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include <locale.h>
 #include <sys/stat.h>
 #include "cadastra_equipamentos.h"
@@ -39,7 +40,7 @@ int loginSenha(){ // Estabelece restrições de acesso a funções do programa
     fprintf(stdout, "\nLogin:\n");
     fgets(login, sizeof(login), stdin);
 
-    if(strlen(login) > MAX_STRING - 1) {
+    if (strlen(login) > MAX_STRING - 1){
         fprintf(stderr, "Login muito longo. Tente novamente.\n");
         return 0;
     }
@@ -54,20 +55,20 @@ int loginSenha(){ // Estabelece restrições de acesso a funções do programa
     fprintf(stdout, "\nSenha:\n");
     fgets(senha, sizeof(senha), stdin);
 
-    if(strlen(senha) > MAX_STRING - 1) {
+    if (strlen(senha) > MAX_STRING - 1){
         fprintf(stderr, "Senha muito longa. Tente novamente.\n");
         return 0;
     }
 
     senha[strcspn(senha, "\r\n")] = 0;
-    if(strcmp(senha, LOGINSENHAMESTRES) == 0){
+    if (strcmp(senha, LOGINSENHAMESTRES) == 0){
         fprintf(stdout, "Bem vindo, administrador. \n");
         fclose(arq2);
         return 4;
     }
 
-    while (fscanf(arq2, "%s %s %d", loginarq, senhaarq, &nivel) == 3) {
-       if (strcmp(login, loginarq) == 0 && strcmp(senha, senhaarq) == 0) {
+    while (fscanf(arq2, "%s %s %d", loginarq, senhaarq, &nivel) == 3){
+       if (strcmp(login, loginarq) == 0 && strcmp(senha, senhaarq) == 0){
             fprintf(stdout, "\nLogin: %s\tNível de acesso atual: %d\n", nivel);
             fclose(arq2);
             return nivel;
@@ -82,7 +83,7 @@ int loginSenha(){ // Estabelece restrições de acesso a funções do programa
 }
 
 void configurarLoginSenha(int nivelAcesso){ //Oferece opções internas de configuração de usuários
-    if (nivelAcesso < 3) {
+    if (nivelAcesso < 3){
         fprintf(stderr, "Acesso negado. Nível de acesso insuficiente.\n");
         return;
     }
@@ -103,7 +104,7 @@ void configurarLoginSenha(int nivelAcesso){ //Oferece opções internas de confi
     fgets(login, sizeof(login), stdin);
     login[strcspn(login, "\r\n")] = 0;
 
-    if(strlen(login) > MAX_STRING - 1) {
+    if (strlen(login) > MAX_STRING - 1){
         fprintf(stderr, "Login muito longo. Tente novamente.\n");
         return;
     }
@@ -112,13 +113,13 @@ void configurarLoginSenha(int nivelAcesso){ //Oferece opções internas de confi
     fgets(senha, sizeof(senha), stdin);
     senha[strcspn(senha, "\r\n")] = 0;
 
-    if(strlen(senha) > MAX_STRING - 1) {
+    if (strlen(senha) > MAX_STRING - 1){
         fprintf(stderr, "Senha muito longa. Tente novamente.\n");
         return;
     }
     
-    while (fscanf(arq2, "%s %s %d", loginarq, senhaarq, &nivel) == 3) {
-       if (strcmp(login, loginarq) == 0 && strcmp(senha, senhaarq) == 0) {
+    while (fscanf(arq2, "%s %s %d", loginarq, senhaarq, &nivel) == 3){
+       if (strcmp(login, loginarq) == 0 && strcmp(senha, senhaarq) == 0){
             fprintf(stdout, "\nLogin: %s\tNível de acesso: %d\n", nivel);
             fclose(arq2);
         } else if (login == "c" || login == "C"){
@@ -135,7 +136,7 @@ void configurarLoginSenha(int nivelAcesso){ //Oferece opções internas de confi
     getchar();
 
     while (confirmacao != 'c' && confirmacao != 'C'){
-        if (confirmacao == 'a' || confirmacao == 'A') {
+        if (confirmacao == 'a' || confirmacao == 'A'){
             fprintf(stdout, "Digite o login do novo usuário:\n");
             fgets(login, sizeof(login), stdin);
             login[strcspn(login, "\r\n")] = 0;
@@ -151,7 +152,7 @@ void configurarLoginSenha(int nivelAcesso){ //Oferece opções internas de confi
             fprintf(arq2, "%s %s %d\n", login, senha, nivel);
             fclose(arq2);
             return;
-        } else if(confirmacao == 'e' || confirmacao == 'E'){
+        } else if (confirmacao == 'e' || confirmacao == 'E'){
             listarUsuarios(nivelAcesso);
             fprintf(stdout, "Digite o login do usuário que deseja editar:\n");
             fgets(login, sizeof(login), stdin);
@@ -168,7 +169,7 @@ void configurarLoginSenha(int nivelAcesso){ //Oferece opções internas de confi
                     senha[strcspn(senha, "\r\n")] = 0;
 
                     fprintf(stdout, "Digite o novo nível de acesso do usuário (entre 1 e 3):\n");
-                    while (nivel < 1 || nivel > 3) {
+                    while (nivel < 1 || nivel > 3){
                         scanf(" %d", &nivel);
                         if (nivel < 1 || nivel > 3) fprintf(stderr, "Nível de acesso inválido. Tente novamente.\n");
                     }
@@ -179,7 +180,7 @@ void configurarLoginSenha(int nivelAcesso){ //Oferece opções internas de confi
                     return;
                 }
             }
-        } else if(confirmacao == 'r' || confirmacao == 'R'){
+        } else if (confirmacao == 'r' || confirmacao == 'R'){
             fprintf(stdout, "Digite o login do usuário que deseja remover:\n");
             fgets(login, sizeof(login), stdin);
             login[strcspn(login, "\r\n")] = 0;
@@ -201,20 +202,20 @@ void listarUsuarios(int nivelAcesso){
     int niv = 0, j = 0;
     char login[MAX_STRING], senha[MAX_STRING];
 
-    if (nivelAcesso < 1) {
+    if (nivelAcesso < 1){
         fprintf(stderr, "\nAcesso negado. Nível de acesso insuficiente.\n");
         return;
     }
 
     FILE *arq2 = fopen("loginSenha.txt", "r");
 
-    if (arq2 == NULL) {
+    if (arq2 == NULL){
         fprintf(stderr, "\nErro ao abrir o arquivo. Peça assistência a um administrador.\n");
         return;
     }
 
-    while (fscanf(arq2, "%s %s %d", login, senha, &niv) == 3) {
-        if (nivelAcesso < niv) {
+    while (fscanf(arq2, "%s %s %d", login, senha, &niv) == 3){
+        if (nivelAcesso < niv){
             fprintf(stdout, "\nLogin: %s\tSenha: %s\t Nível: *\t", login, senha);
             continue;
         } else {
@@ -223,14 +224,14 @@ void listarUsuarios(int nivelAcesso){
         j++;
     }
 
-    if (j == 0) {
+    if (j == 0){
         fprintf(stdout, "\nNenhum usuário cadastrado.\n");
     }
 
     fclose(arq2);
 }
 
-int modificarEquipamento(Equipamentos vetor[], int index, int nivelAcesso){ // Será chamada em adicionarEquipamento() ou editarEquipamento(). O nível de acesso é verificado aqui, e não nas outras duas.
+int modificarEquipamento(Equipamentos vetor[], int index, int nivelAcesso){
     Equipamentos *cadastro = (Equipamentos *) malloc (sizeof(Equipamentos));
     char confirmacao;
     int ano, utilizacao, codigo;
@@ -240,7 +241,7 @@ int modificarEquipamento(Equipamentos vetor[], int index, int nivelAcesso){ // S
 
     fprintf(stdout, "Código do equipamento, entre 0 e 99999: ");
     scanf(" %d", &codigo);
-    if (codigo < 0 || codigo > 99999) {
+    if (codigo < 0 || codigo > 99999){
         fprintf(stderr, "Código inválido!\n");
         free(cadastro);
         return -1;
@@ -257,7 +258,7 @@ int modificarEquipamento(Equipamentos vetor[], int index, int nivelAcesso){ // S
 
     fprintf(stdout, "Ano de fabricação (entre -9999 e 9999): ");
     scanf(" %d", &ano);
-    if (ano < -9999 || ano > 9999) {
+    if (ano < -9999 || ano > 9999){
         fprintf(stderr, "Ano inválido!\n");
         free(cadastro);
         return -1;
@@ -266,7 +267,7 @@ int modificarEquipamento(Equipamentos vetor[], int index, int nivelAcesso){ // S
 
     fprintf(stdout, "Utilização (digite 0 caso desocupado ou 1 caso ocupado): ");
     scanf(" %d", &utilizacao);
-    if (utilizacao != 0 && utilizacao != 1) {
+    if (utilizacao != 0 && utilizacao != 1){
         fprintf(stderr, "Valor inválido!\n");
         free(cadastro);
         return -1;
@@ -296,7 +297,7 @@ int modificarEquipamento(Equipamentos vetor[], int index, int nivelAcesso){ // S
 
     fprintf(stdout, "\nConfirma? S/N\n");
 
-    scanf(" %c", &confirmacao);
+    scanf("  %c", &confirmacao);
 
     if (confirmacao == 's' || confirmacao == 'S'){
         cadastro->codigo = codigo;
@@ -321,7 +322,7 @@ int modificarEquipamento(Equipamentos vetor[], int index, int nivelAcesso){ // S
 }
 
 void adicionarEquipamento(Equipamentos vetor[], int *n, int nivelAcesso){
-     if (nivelAcesso < 2) {
+     if (nivelAcesso < 2){
         fprintf(stderr, "Acesso negado. Nível de acesso insuficiente.\n");
         return;
     }
@@ -338,7 +339,7 @@ void adicionarEquipamento(Equipamentos vetor[], int *n, int nivelAcesso){
 }
 
 void editarEquipamento(Equipamentos vetor[], int *n, int nivelAcesso){
-     if (nivelAcesso < 2) {
+     if (nivelAcesso < 2){
         fprintf(stderr, "Acesso negado. Nível de acesso insuficiente.\n");
         return;
     }
@@ -347,12 +348,28 @@ void editarEquipamento(Equipamentos vetor[], int *n, int nivelAcesso){
     char confirmacao;
     
     listarEquipamentos(vetor, n, nivelAcesso);
+    
+    fprintf(stdout, "Você escolheu a função para editar equipamentos. Tem certeza que quer fazer isso?");
+    scanf(" %c", confirmacao);
+    switch (confirmacao){
+        case 's':
+        case 'S':
+            break;
 
-    printf("\nQual o número do equipamento que você quer editar?\n");
+        case 'n':
+        case 'N':
+            return;
+
+        default: fprintf(stdout, "Opção inválida.");
+            break;
+    }
+
+    fprintf(stdout, "\nQual o número do equipamento que você quer editar?\n");
+    
     scanf(" %i", &numero);
     numero -=1; //atualiza o índice do equipamento no vetor
 
-    printf("\nPara editar o equipamento, informe:\n");
+    fprintf(stdout, "\nPara editar o equipamento, informe:\n");
 
     modificarEquipamento(vetor, numero, nivelAcesso); 
     
@@ -367,7 +384,7 @@ void recursao(Equipamentos vetor[], int num, int n){ // Função recursiva usada
 }
 
 void removerEquipamento(Equipamentos vetor[], int *n, int nivelAcesso){
-    if (nivelAcesso < 2) {
+    if (nivelAcesso < 2){
         fprintf(stderr, "Acesso negado. Nível de acesso insuficiente.\n");
         return;
     }
@@ -398,123 +415,122 @@ void removerEquipamento(Equipamentos vetor[], int *n, int nivelAcesso){
 }
 
 int lista(Equipamentos vetor[], int j){
-    for (int i = 0; i < j; i++) {
-        fprintf(stdout, "\n-------- Equipamento %d --------\n\n", i+1);
-        fprintf(stdout, "\tCodigo: %d\n", vetor[i].codigo);
-        fprintf(stdout, "\tNome: %s\n", vetor[i].nome);
-        fprintf(stdout, "\tFabricante: %s\n", vetor[i].fabricante);
-        fprintf(stdout, "\tAno: %d\n", vetor[i].ano);
-        fprintf(stdout, "\tValor: %.2f\n", vetor[i].valor);
-        fprintf(stdout, "\tNumero de serie: %s\n", vetor[i].serie);
-        fprintf(stdout, "\tTipo: %s\n", vetor[i].t_specs.tipo);
-        fprintf(stdout, "\tVoltagem de operacao: %.2f V\n", vetor[i].t_specs.tensaoNominal);
-        fprintf(stdout, "\tCorrente maxima: %.2f A\n", vetor[i].t_specs.correnteMaxima);
-        fprintf(stdout, "\tConsumo: %.2f W\n", vetor[i].t_specs.Potencia);
-    }
+        fprintf(stdout, "\n-------- Equipamento %d --------\n\n", j+1);
+        fprintf(stdout, "\tCodigo: %d\n", vetor[j].codigo);
+        fprintf(stdout, "\tNome: %s\n", vetor[j].nome);
+        fprintf(stdout, "\tFabricante: %s\n", vetor[j].fabricante);
+        fprintf(stdout, "\tAno: %d\n", vetor[j].ano);
+        fprintf(stdout, "\tUtilização: %d\n", vetor[j].utilizacao);
+        fprintf(stdout, "\tValor: %.2f\n", vetor[j].valor);
+        fprintf(stdout, "\tNumero de serie: %s\n", vetor[j].serie);
+        fprintf(stdout, "\tTipo: %s\n", vetor[j].t_specs.tipo);
+        fprintf(stdout, "\tVoltagem de operacao: %.2f V\n", vetor[j].t_specs.tensaoNominal);
+        fprintf(stdout, "\tCorrente maxima: %.2f A\n", vetor[j].t_specs.correnteMaxima);
+        fprintf(stdout, "\tConsumo: %.2f W\n", vetor[j].t_specs.Potencia);
 
     return j;
 }
 
+int contaEquipamentos(Equipamentos vetor[]){
+    int i = 0; // i = Contagem de equipamentos
+
+    FILE *arqconta = fopen("Equipamentos.txt", "r");
+    while (fscanf(arqconta, "%d %s %s %d %d %f %s %s %f %f %f", &vetor[i].codigo,vetor[i].nome,vetor[i].fabricante,&vetor[i].ano,&vetor[i].utilizacao,&vetor[i].valor,
+                vetor[i].serie,vetor[i].t_specs.tipo,&vetor[i].t_specs.tensaoNominal,&vetor[i].t_specs.correnteMaxima,&vetor[i].t_specs.Potencia) == 11){
+                i++;
+    }
+
+    fclose(arqconta);
+    return i;
+}
+
 void listarEquipamentos(Equipamentos vetor[], int *n, int nivelAcesso){
-    if (nivelAcesso < 1) {
+    if (nivelAcesso < 1){
         fprintf(stderr, "Acesso negado. Nível de acesso insuficiente.\n");
         return;
     }
 
-    if (*n == 0) {
+    if (*n == 0){
         fprintf(stdout, "\nSem equipamentos cadastrados.\n");
         return;
     }
 
-    int j = *n;
+    int j = contaEquipamentos(vetor);
 
     fprintf(stdout, "\n-Lista de equipamentos:-\n");
 
-    lista(vetor, j);
+    for (int i = 0; i < j; i++) lista(vetor, i);
 
     //caso o valor de n seja 0 significa que não há elementos no vetor, logo não há equipamentos cadastrados
     if (*n == 0) fprintf(stdout, "\nNenhum equipamento cadastrado\n");
 }
 
 void buscarPorFabricante(Equipamentos vetor[], int *n, int nivelAcesso){
-    if (nivelAcesso < 1) {
+    if (nivelAcesso < 1){
         fprintf(stderr, "Acesso negado. Nível de acesso insuficiente.\n");
         return;
     }
     
-    char fab[30];
-    char vfab[20][20];
-    int t=0;
+    int i=0;
+    char fab[MAX_STRING];
     
-    if (*n == 0) {
-        fprintf(stdout, "\nSem equipamentos cadastrados\n");
-        return ;
+    if (*n == 0){
+        fprintf(stdout, "\nSem equipamentos cadastrados.\n");
+        return;
     }
 
-    fprintf(stdout, "\nDigite o fabricante ");
-    scanf( "%s", fab);
-    //Percorre o vetor de equipamentos
-    for (int j = 0; j < *n; j++) {
+    getchar();
+    fprintf(stdout, "\nDigite o fabricante: ");
+    fgets(fab, sizeof(fab), stdin);
+    fab[strcspn(fab, "\r\n")] = 0;
+
+    for (int j = 0; j < *n; j++){
         if (strcmp(fab, vetor[j].fabricante) == 0){
-            //Caso o fabricante achado seja igual ao definido pelo usuário(variável fab), ele salva o produto em um vetor.
-            strcpy(vfab[t], vetor[j].t_specs.tipo);
-            t+=1;
+            lista(vetor, j);
+            i++;
         }
     }
-
-    fprintf(stdout, "\n- %d produto(s) achado(s) -\n", t);
-
-    //percorre o vetor para mostrar na tela todos os equipamentos condizentes com o fabricante procurado.
-    for (int i = 0; i < t; i++) { 
-        fprintf(stdout, "\n-------- Equipamento %d --------\n\n", i+1);
-        fprintf(stdout, "\tCódigo: %d\n", vetor[i].codigo);
-        fprintf(stdout, "\tNome: %s\n", vetor[i].nome);
-        fprintf(stdout, "\tAno: %d\n", vetor[i].ano);
-        fprintf(stdout, "\tUtilização: %d\n", vetor[i].utilizacao);
-        fprintf(stdout, "\tValor: %.2f\n", vetor[i].valor);
-        fprintf(stdout, "\tNúmero de série: %s\n", vetor[i].serie);
-        fprintf(stdout, "\tTipo: %s\n", vetor[i].t_specs.tipo);
-        fprintf(stdout, "\tTensão de operação: %.2f V\n", vetor[i].t_specs.tensaoNominal);
-        fprintf(stdout, "\tCorrente máxima: %.2f A\n", vetor[i].t_specs.correnteMaxima);
-        fprintf(stdout, "\tConsumo: %.2f W\n", vetor[i].t_specs.Potencia);
+    
+    if (i == 0){
+        fprintf(stdout, "\nNenhum produto encontrado.");
+        return;
     }
 
-    //Se t = 0, não há produtos com esse fabricante no sistema
-    if (t == 0) {
-        fprintf(stdout, "\nNenhum equipamento do fabricante encontrado\n");
-    }
+    fprintf(stdout, "\n%d produtos de %d produtos achado(s).\n", i,*n);
 }
 
 void listarEquipamentosPorUso(Equipamentos vetor[], int *n, int nivelAcesso){
-    if (nivelAcesso < 1) {
+    if (nivelAcesso < 1){
         fprintf(stderr, "Acesso negado. Nível de acesso insuficiente.\n");
         return;
     }
 
     int j=0; //j é controle, caso seja 0 não há elementos em uso
-    int i, confirma;
+    int i, input;
 
-    if (*n == 0) {
+    if (*n == 0){
         fprintf(stdout, "\nSem equipamentos cadastrados\n");
         return;
     }
 
-    fprintf(stdout, "Deseja listar quais equipamentos?\n0) Disponíveis\n1) Ocupados");
-    scanf(" %d", &confirma);
+    fprintf(stdout, "\nDeseja listar quais equipamentos?\n0) Disponíveis\n1) Ocupados\n");
+    scanf(" %d", &input);
 
-    if (confirma == 0){
+    if (input == 0){
         for (i = 0; i < *n; i++){
             if (vetor[i].utilizacao = 0){
             fprintf(stdout, "\n- Produto(s) disponíveis: -\n");
-            lista(vetor, j);
+            lista(vetor, i);
             }
+        if (i == 0) fprintf(stdout, "\nNenhum produto disponível.\n");
         }
-    } else if (confirma == 1){
+    } else if (input == 1){
         for (i = 0; i < *n; i++){
             if (vetor[i].utilizacao = 1){
             fprintf(stdout, "\n- Produto(s) em uso: -\n");
             lista(vetor, j);
             }
+        if (i == 0) fprintf(stdout, "\nNenhum produto em uso.\n");
         }
     } else fprintf(stderr, "Opção inválida");
 
@@ -522,54 +538,44 @@ void listarEquipamentosPorUso(Equipamentos vetor[], int *n, int nivelAcesso){
 }
 
 void salvarDadosEmArquivo(Equipamentos vetor[], int *n, int nivelAcesso){
-    if (nivelAcesso < 2) {
+    if (nivelAcesso < 2){
         fprintf(stderr, "Acesso negado. Nível de acesso insuficiente.\n");
         return;
     }
 
-    char *nome = "equipamentos.txt";
+    char *nome = "Equipamentos.txt";
     FILE *arq = fopen(nome, "w");
 
-    if (arq == NULL) {
+    if (arq == NULL){
         fprintf(stderr, "Erro ao abrir o arquivo");
     } else {
         // Lê o arquivo, caso exista, e salva todos os equipamentos do vetor no arquivo em questão,
-        for (int i = 0; i < *n; i++) { 
+        for (int i = 0; i < *n; i++){ 
             fprintf(arq, "%d %s %s %d %d %.2f %s %s %.2f %.2f %.2f\n", vetor[i].codigo, vetor[i].nome, vetor[i].fabricante, vetor[i].ano, vetor[i].utilizacao, 
                 vetor[i].valor, vetor[i].serie, vetor[i].t_specs.tipo, vetor[i].t_specs.tensaoNominal, vetor[i].t_specs.correnteMaxima, vetor[i].t_specs.Potencia);
         }
     }
 
     fclose(arq);
-    fprintf(stdout, "\nDados salvos com sucesso\n");
+    fprintf(stdout, "\nProdutos salvos em um arquivo .txt no diretório do programa.\n");
 }
 
 void carregarDadosDoArquivo(Equipamentos vetor[], int *n, int nivelAcesso){
-    if (nivelAcesso < 1) {
+    if (nivelAcesso < 1){
         fprintf(stderr, "Acesso negado. Nível de acesso insuficiente.\n");
         return;
     }
 
-    int i = 0;
-    char *nome = "equipamentos.txt";
+    char *nome = "Equipamentos.txt";
     FILE *arq = fopen(nome, "r");
 
-    if (arq == NULL) {
+    if (arq == NULL){
         fprintf(stderr, "Erro ao abrir o arquivo");
         return;
-    } else {  
-        while (fscanf(arq, "%d %s %s %d %d %f %s %s %f %f %f", &vetor[i].codigo,vetor[i].nome,vetor[i].fabricante,&vetor[i].ano,&vetor[i].utilizacao,&vetor[i].valor,
-                vetor[i].serie,vetor[i].t_specs.tipo,&vetor[i].t_specs.tensaoNominal,&vetor[i].t_specs.correnteMaxima,&vetor[i].t_specs.Potencia) == 11) {
-                i++;
-        }
-
-        lista(vetor, i);
-
-        if (*n == 0 && i != 0) { //verifica se é a primeira execução, pois o valor de n é definido em 0 e caso j seja 0 significa que não há nada, logo não há necessidade de salvar.
-            *n = i; //define o número de equipamentos presentes no sistema
-            fclose(arq);
-            return;
-        }
+    } else {
+        int i = contaEquipamentos(vetor);
+        for (int j = 0; j < i; j++) lista(vetor, j);
+        *n = i; //define o número de equipamentos presentes no sistema
     }
     
     fclose(arq);
@@ -577,93 +583,153 @@ void carregarDadosDoArquivo(Equipamentos vetor[], int *n, int nivelAcesso){
 }
 
 void abrirOutrosFormatos(Equipamentos vetor[], int *n, int nivelAcesso){
-    if (nivelAcesso < 2) {
+    if (nivelAcesso < 2){
         fprintf(stderr, "Acesso negado. Nível de acesso insuficiente.\n");
         return;
     }
     
-    fprintf(stdout, "Deseja abrir/exportar arquivos com formatos diferentes? Digite '1' para abrir ou '2' para exportar. Digite 'c' para cancelar.\n");
+    fprintf(stdout, "\nDeseja abrir/exportar arquivos em formatos diferentes? Digite '1' para abrir, '2' para exportar ou 'c' para cancelar.\n");
     char input;
     scanf(" %c", &input);
     switch(input){
-        case '1': //funcionalidade em implementação
-            break;
-
-        case '2':
-            fprintf(stdout, "Deseja exportar os dados para qual formato?\n1) CSV\n2) JSON\n3) XML\nc) Sair\n");
+        case '1':
+            fprintf(stdout, "\nDeseja abrir os dados de qual formato?\n1) CSV\n2) JSON\n3) XML\nc) Sair\n");
             char confirmacao;
             scanf(" %c", &confirmacao);
             switch (confirmacao){
-                case 1: 
-                    const char *csv = "Equipamentos.csv";
-                    FILE *arq1 = fopen("equipamentos.txt", "r");
-                    FILE *arq2 = fopen(csv, "w");
-                    fprintf(arq2, "Codigo,Nome,Fabricante,Ano,Utilizacao,Valor,Serie,Tipo,TensaoNominal,CorrenteMaxima,Potencia\n");
-                    for (int i = 0; i < *n; i++) { 
-                        fprintf(arq2, "%d,%s,%s,%d,%d,%f,%s,%s,%f,%f,%f\n", vetor[i].codigo, vetor[i].nome, vetor[i].fabricante, vetor[i].ano, vetor[i].utilizacao, 
+                case '1':
+                    FILE *csv = fopen("Equipamentos.csv", "r");
+                    if (csv == NULL){
+                        fprintf(stderr, "Erro ao abrir o arquivo. Verifique se o arquivo existe e tente novamente.\n");
+                        return;
+                    }
+
+                    int i = 0;
+                    while (fscanf(csv, "%d,%[^,],%[^,],%d,%d,%f,%[^,],%[^,],%f,%f,%f", &vetor[i].codigo, vetor[i].nome, vetor[i].fabricante, &vetor[i].ano, &vetor[i].utilizacao,
+                                &vetor[i].valor, vetor[i].serie, vetor[i].t_specs.tipo, &vetor[i].t_specs.tensaoNominal, &vetor[i].t_specs.correnteMaxima, &vetor[i].t_specs.Potencia) == 11){
+                        i++;
+                    }
+
+                    fclose(csv);
+                    *n = i; // Define o número de equipamentos
+                    fprintf(stdout, "\nDados importados de CSV.\n");
+                    break; 
+                
+                case '2':
+                    FILE *json = fopen("Equipamentos.json", "r");
+                    if (json == NULL){
+                        fprintf(stderr, "Erro ao abrir o arquivo. Verifique se o arquivo existe e tente novamente.\n");
+                        return;
+                    }
+
+                    i = 0;
+                    while (fscanf(json, "%d,%[^,],%[^,],%d,%d,%f,%[^,],%[^,],%f,%f,%f", &vetor[i].codigo, vetor[i].nome, vetor[i].fabricante, &vetor[i].ano, &vetor[i].utilizacao,
+                                &vetor[i].valor, vetor[i].serie, vetor[i].t_specs.tipo, &vetor[i].t_specs.tensaoNominal, &vetor[i].t_specs.correnteMaxima, &vetor[i].t_specs.Potencia) == 11){
+                        i++;
+                    }
+                    
+                    fclose(json);
+                    *n = i;
+                    fprintf(stdout, "\nDados importados de JSON.\n");
+                    break;
+
+                case '3':
+                    FILE *xml = fopen("Equipamentos.xml", "r");
+                    if (xml == NULL){
+                        fprintf(stderr, "Erro ao abrir o arquivo. Verifique se o arquivo existe e tente novamente.\n");
+                        return;
+                    }
+
+                   i = 0;
+                   while (fscanf(xml, "%d,%[^,],%[^,],%d,%d,%f,%[^,],%[^,],%f,%f,%f", &vetor[i].codigo, vetor[i].nome, vetor[i].fabricante, &vetor[i].ano, &vetor[i].utilizacao,
+                                &vetor[i].valor, vetor[i].serie, vetor[i].t_specs.tipo, &vetor[i].t_specs.tensaoNominal, &vetor[i].t_specs.correnteMaxima, &vetor[i].t_specs.Potencia) == 11){
+                        i++;
+                    }
+
+                    fclose(xml);
+                    *n = i;
+                    fprintf(stdout, "\nDados importados de XML.\n");
+                    break;
+                
+                case 'c':
+                case 'C':
+                    return;
+
+                default:
+                    fprintf(stderr, "Opção inválida. Tente novamente.\n");
+                    break;
+            }
+
+            break;
+
+        case '2':
+            FILE *txt = fopen("Equipamentos.txt", "r");
+            char confirmacao2;
+
+            fprintf(stdout, "\nDeseja exportar os dados para qual formato?\n1) CSV\n2) JSON\n3) XML\nc) Sair\n");
+            scanf(" %c", &confirmacao2);
+            switch (confirmacao2){
+                case '1': 
+                    FILE *txt = fopen("Equipamentos.txt", "r");
+                    FILE *csv = fopen("Equipamentos.csv", "w");
+                    fprintf(csv, "Codigo,Nome,Fabricante,Ano,Utilizacao,Valor,Serie,Tipo,TensaoNominal,CorrenteMaxima,Potencia\n");
+                    for (int i = 0; i < *n; i++){ 
+                        fprintf(csv, "%d,%s,%s,%d,%d,%f,%s,%s,%f,%f,%f\n", vetor[i].codigo, vetor[i].nome, vetor[i].fabricante, vetor[i].ano, vetor[i].utilizacao, 
                         vetor[i].valor, vetor[i].serie, vetor[i].t_specs.tipo, vetor[i].t_specs.tensaoNominal, vetor[i].t_specs.correnteMaxima, vetor[i].t_specs.Potencia);
                     }
 
-                    fclose(arq1); fclose (arq2);
+                    fclose(txt); fclose (csv);
                     fprintf(stdout, "\nDados exportados para CSV.\n");
                     break;
 
-                case 2:
-                    /*
-                    const char *json = "Equipamentos.json";
-                    FILE *arq1 = fopen("equipamentos.txt", "r");
-                    FILE *arq2 = fopen(json, "w");
-                    fprintf(arq2, "[\n");
-                    for (int i = 0; i < *n; i++) {
-                        fprintf(arq2, "  {\n");
-                        fprintf(arq2, "    \"codigo\": %d,\n", vetor[i].codigo);
-                        fprintf(arq2, "    \"nome\": \"%s\",\n", vetor[i].nome);
-                        fprintf(arq2, "    \"fabricante\": \"%s\",\n", vetor[i].fabricante);
-                        fprintf(arq2, "    \"ano\": %d,\n", vetor[i].ano);
-                        fprintf(arq2, "    \"utilizacao\": %d,\n", vetor[i].utilizacao);
-                        fprintf(arq2, "    \"valor\": %.2f,\n", vetor[i].valor);
-                        fprintf(arq2, "    \"serie\": \"%s\",\n", vetor[i].serie);
-                        fprintf(arq2, "    \"tipo\": \"%s\",\n", vetor[i].t_specs.tipo);
-                        fprintf(arq2, "    \"tensaoNominal\": %.2f,\n", vetor[i].t_specs.tensaoNominal);
-                        fprintf(arq2, "    \"correnteMaxima\": %.2f,\n", vetor[i].t_specs.correnteMaxima);
-                        fprintf(arq2, "    \"potencia\": %.2f\n", vetor[i].t_specs.Potencia);
-                        if (i < *n - 1) {
-                            fprintf(arq2, "  },\n");
+                case '2':
+                    FILE *json = fopen("Equipamentos.json", "w");
+                    fprintf(json, "[\n");
+                    for (int i = 0; i < *n; i++){
+                        fprintf(json, "  {\n");
+                        fprintf(json, "    \"codigo\": %d,\n", vetor[i].codigo);
+                        fprintf(json, "    \"nome\": \"%s\",\n", vetor[i].nome);
+                        fprintf(json, "    \"fabricante\": \"%s\",\n", vetor[i].fabricante);
+                        fprintf(json, "    \"ano\": %d,\n", vetor[i].ano);
+                        fprintf(json, "    \"utilizacao\": %d,\n", vetor[i].utilizacao);
+                        fprintf(json, "    \"valor\": %.2f,\n", vetor[i].valor);
+                        fprintf(json, "    \"serie\": \"%s\",\n", vetor[i].serie);
+                        fprintf(json, "    \"tipo\": \"%s\",\n", vetor[i].t_specs.tipo);
+                        fprintf(json, "    \"tensaoNominal\": %.2f,\n", vetor[i].t_specs.tensaoNominal);
+                        fprintf(json, "    \"correnteMaxima\": %.2f,\n", vetor[i].t_specs.correnteMaxima);
+                        fprintf(json, "    \"potencia\": %.2f\n", vetor[i].t_specs.Potencia);
+                        if (i < *n - 1){
+                            fprintf(json, "  },\n");
                         } else {
-                            fprintf(arq2, "  }\n");
+                            fprintf(json, "  }\n");
                         }
                     }
-                    fprintf(arq2, "]\n");
-                    fclose(arq1); fclose (arq2);
+                    fprintf(json, "]\n");
+                    fclose(txt); fclose (json);
                     fprintf(stdout, "\nDados exportados para JSON.\n");
-                    */
                     break;
 
-                case 3:
-                    /*
-                    const char *xml = "Equipamentos.xml";
-                    FILE *arq1 = fopen("equipamentos.txt", "r");
-                    FILE *arq2 = fopen(xml, "w");
-                    fprintf(arq2, "<Equipamentos>\n");
-                    for (int i = 0; i < *n; i++) {
-                        fprintf(arq2, "  <Equipamento>\n");
-                        fprintf(arq2, "    <Codigo>%d</Codigo>\n", vetor[i].codigo);
-                        fprintf(arq2, "    <Nome>%s</Nome>\n", vetor[i].nome);
-                        fprintf(arq2, "    <Fabricante>%s</Fabricante>\n", vetor[i].fabricante);
-                        fprintf(arq2, "    <Ano>%d</Ano>\n", vetor[i].ano);
-                        fprintf(arq2, "    <Utilizacao>%d</Utilizacao>\n", vetor[i].utilizacao);
-                        fprintf(arq2, "    <Valor>%.2f</Valor>\n", vetor[i].valor);
-                        fprintf(arq2, "    <Serie>%s</Serie>\n", vetor[i].serie);
-                        fprintf(arq2, "    <Tipo>%s</Tipo>\n", vetor[i].t_specs.tipo);
-                        fprintf(arq2, "    <TensaoNominal>%.2f</TensaoNominal>\n", vetor[i].t_specs.tensaoNominal);
-                        fprintf(arq2, "    <CorrenteMaxima>%.2f</CorrenteMaxima>\n", vetor[i].t_specs.correnteMaxima);
-                        fprintf(arq2, "    <Potencia>%.2f</Potencia>\n", vetor[i].t_specs.Potencia);
-                        fprintf(arq2, "  </Equipamento>\n");
+                case '3':
+                    FILE *xml = fopen("Equipamentos.xml", "w");
+                    fprintf(xml, "<Equipamentos>\n");
+                    for (int i = 0; i < *n; i++){
+                        fprintf(xml, "  <Equipamento>\n");
+                        fprintf(xml, "    <Codigo>%d</Codigo>\n", vetor[i].codigo);
+                        fprintf(xml, "    <Nome>%s</Nome>\n", vetor[i].nome);
+                        fprintf(xml, "    <Fabricante>%s</Fabricante>\n", vetor[i].fabricante);
+                        fprintf(xml, "    <Ano>%d</Ano>\n", vetor[i].ano);
+                        fprintf(xml, "    <Utilizacao>%d</Utilizacao>\n", vetor[i].utilizacao);
+                        fprintf(xml, "    <Valor>%.2f</Valor>\n", vetor[i].valor);
+                        fprintf(xml, "    <Serie>%s</Serie>\n", vetor[i].serie);
+                        fprintf(xml, "    <Tipo>%s</Tipo>\n", vetor[i].t_specs.tipo);
+                        fprintf(xml, "    <TensaoNominal>%.2f</TensaoNominal>\n", vetor[i].t_specs.tensaoNominal);
+                        fprintf(xml, "    <CorrenteMaxima>%.2f</CorrenteMaxima>\n", vetor[i].t_specs.correnteMaxima);
+                        fprintf(xml, "    <Potencia>%.2f</Potencia>\n", vetor[i].t_specs.Potencia);
+                        fprintf(xml, "  </Equipamento>\n");
                     }
-                    fprintf(arq2, "</Equipamentos>\n");
-                    fclose(arq1); fclose (arq2);
+                    fprintf(xml, "</Equipamentos>\n");
+                    fclose(txt); fclose (xml);
                     fprintf(stdout, "\nDados exportados para XML.\n");
-                    */
                     break;
                 
                 case 'C':
@@ -672,6 +738,7 @@ void abrirOutrosFormatos(Equipamentos vetor[], int *n, int nivelAcesso){
 
                 default:
                     fprintf(stderr, "Opção inválida. Tente novamente.\n");
+                    break;
                 }
             break;
 
@@ -686,7 +753,14 @@ void abrirOutrosFormatos(Equipamentos vetor[], int *n, int nivelAcesso){
     return;
 }
 
-void verificarAlteracoes(Equipamentos vetor[], int *n, int nivelAcesso){ // COMPARAR BACKUP COM ARQUIVO ATUAL, DAR OPÇÕES PARA VERIFICAR ARQUIVO CSV OU OUTROS
+void verificarAlteracoes(Equipamentos vetor[], int *n, int nivelAcesso){ 
+    if (nivelAcesso < 3){
+        fprintf(stderr, "Acesso negado. Nível de acesso insuficiente.\n");
+        return;
+    }
+
+
+    // COMPARAR BACKUP COM ARQUIVO ATUAL, DAR OPÇÕES PARA VERIFICAR ARQUIVO CSV OU OUTROS
     /*fprintf(stdout, "Deseja verificar alterações a partir de que data? (formato: dd/mm/aaaa)\n"); 
 
     IMPLEMENTAR <SYS/STAT.H>
@@ -695,7 +769,7 @@ void verificarAlteracoes(Equipamentos vetor[], int *n, int nivelAcesso){ // COMP
     INFORMAÇÕES SENSÍVEIS, COMO EQUIPAMENTOS, LOGIN, SENHA E OUTROS ARQUIVOS, QUE PODEM ESTAR PRESENTES EM BACKUPS ANTIGOS.
     */
 
-    printf("\nFuncionalidade em desenvolvimento. Peça assistência a um administrador.\n");
+    fprintf(stdout, "\nFuncionalidade em desenvolvimento. Peça assistência a um administrador.\n");
     return;
 }
 
