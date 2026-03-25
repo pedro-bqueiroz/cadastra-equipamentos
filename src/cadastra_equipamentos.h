@@ -33,6 +33,7 @@ void editarEquipamento(Equipamentos vetor[], int *n, int nivelAcesso);
 void recursao(Equipamentos vetor[], int index, int n);
 void removerEquipamento(Equipamentos vetor[], int *n, int nivelAcesso);
 int lista(Equipamentos vetor[], int j);
+int contaEquipamentos(Equipamentos vetor[]);
 void listarEquipamentos(Equipamentos vetor[], int *n, int nivelAcesso);
 void buscarPorFabricante(Equipamentos vetor[], int *n, int nivelAcesso);
 void listarEquipamentosPorUso(Equipamentos vetor[], int *n, int nivelAcesso);
