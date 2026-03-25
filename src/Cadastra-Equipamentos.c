@@ -1,22 +1,23 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include <locale.h>
 #include <sys/stat.h>
 #include "cadastra_equipamentos.h"
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[]){
     setlocale(LC_ALL, "Portuguese"); // Configura a localidade para Português do Brasil, garantindo a exibição correta de caracteres acentuados.
     setlocale(LC_NUMERIC, "C"); // Evita a conversão de pontos decimais para vírgulas, facilitando a impressão de dados para arquivos CSV.
     system("cls || clear"); // Útil para limpar a tela em sistemas Windows e Unix, respectivamente.
 
-    FILE *arq = fopen("equipamentos.txt", "r"); // Será feito um teste de existência do arquivo.
+    FILE *arq = fopen("Equipamentos.txt", "r"); // Será feito um teste de existência do arquivo.
     int n=0; // Variável que vai fazer a contagem de quantos equipamentos estão cadastrados, importante para se usar nos loops.
     int confirmacao;
     Equipamentos vetor[MAX_EQUIPAMENTOS]; // Vetor responsável por armazenar os equipamentos já cadastrados.
 
     int nivelAcesso = loginSenha();
-    if (nivelAcesso == -1) {
+    if (nivelAcesso == -1){
         return 0;
     }
 
@@ -29,7 +30,7 @@ int main(int argc, char *argv[]) {
         fprintf(stdout, "Saindo do Cadastra-Equipamentos...");
         return 0;
         } else if (confirmacao == 's' || confirmacao == 'S'){
-        arq = fopen("equipamentos.txt", "w");
+        arq = fopen("Equipamentos.txt", "w");
         fclose(arq);
         } else {
         fprintf(stderr, "Opção inválida.\n");
