@@ -623,11 +623,12 @@ void abrirOutrosFormatos(Equipamentos vetor[], int *n, int nivelAcesso){
                     }
 
                     i = 0;
+                    /* 
                     while (fscanf(json, "%d,%[^,],%[^,],%d,%d,%f,%[^,],%[^,],%f,%f,%f", &vetor[i].codigo, vetor[i].nome, vetor[i].fabricante, &vetor[i].ano, &vetor[i].utilizacao,
                                 &vetor[i].valor, vetor[i].serie, vetor[i].t_specs.tipo, &vetor[i].t_specs.tensaoNominal, &vetor[i].t_specs.correnteMaxima, &vetor[i].t_specs.Potencia) == 11){
                         i++;
                     }
-                    
+                    */
                     fclose(json);
                     *n = i;
                     fprintf(stdout, "\nDados importados de JSON.\n");
@@ -640,12 +641,13 @@ void abrirOutrosFormatos(Equipamentos vetor[], int *n, int nivelAcesso){
                         return;
                     }
 
-                   i = 0;
-                   while (fscanf(xml, "%d,%[^,],%[^,],%d,%d,%f,%[^,],%[^,],%f,%f,%f", &vetor[i].codigo, vetor[i].nome, vetor[i].fabricante, &vetor[i].ano, &vetor[i].utilizacao,
+                    i = 0;
+                    /*
+                    while (fscanf(xml, "%d,%[^,],%[^,],%d,%d,%f,%[^,],%[^,],%f,%f,%f", &vetor[i].codigo, vetor[i].nome, vetor[i].fabricante, &vetor[i].ano, &vetor[i].utilizacao,
                                 &vetor[i].valor, vetor[i].serie, vetor[i].t_specs.tipo, &vetor[i].t_specs.tensaoNominal, &vetor[i].t_specs.correnteMaxima, &vetor[i].t_specs.Potencia) == 11){
                         i++;
                     }
-
+                    */
                     fclose(xml);
                     *n = i;
                     fprintf(stdout, "\nDados importados de XML.\n");
