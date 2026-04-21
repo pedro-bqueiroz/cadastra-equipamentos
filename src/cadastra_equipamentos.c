@@ -94,20 +94,10 @@ void configurar_login_senha(int nivelAcesso){ // Oferece opções internas de co
     getchar();
     fgets(login, sizeof(login), stdin);
     login[strcspn(login, "\r\n")] = 0;
-
-    if (strlen(login) > MAX_STRING - 1) {
-        fprintf(stderr, "Login muito longo. Tente novamente.\n");
-        return;
-    }
     
     fprintf(stdout, "\nSenha:\n");
     fgets(senha, sizeof(senha), stdin);
     senha[strcspn(senha, "\r\n")] = 0;
-
-    if (strlen(senha) > MAX_STRING - 1) {
-        fprintf(stderr, "Senha muito longa. Tente novamente.\n");
-        return;
-    }
     
     while (fscanf(arq2, "%s %s %d", loginarq, senhaarq, &nivel) == 3) {
        if (strcmp(login, loginarq) == 0 && strcmp(senha, senhaarq) == 0) {
