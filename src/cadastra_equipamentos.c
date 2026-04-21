@@ -498,7 +498,7 @@ void buscar_por_fabricante(Equipamentos vetor[], int *n, int nivelAcesso){
     fprintf(stdout, "\n%d produtos de %d produtos achado(s).\n", i,*n);
 }
 
-void listar_equipamentosPorUso(Equipamentos vetor[], int *n, int nivelAcesso) {
+void listar_equipamentos_por_uso(Equipamentos vetor[], int *n, int nivelAcesso) {
     if (nivelAcesso < 1) {
         fprintf(stderr, "Acesso negado. Nível de acesso insuficiente.\n");
         return;
