@@ -20,27 +20,27 @@ typedef struct {
 typedef struct {
     int ano, utilizacao, quantidade, codigo;
     char serie[MAX_STRING]; // Número de série
-    float valor; // Valor de mercado
+    float valor; // Valor de mercado (ajustado para inflação no ano corrente...)
     char nome[MAX_STRING], fabricante[MAX_STRING];
     EspecificacoesTecnicas t_specs;
 } Equipamentos;
 
-int loginSenha();
-void configurarLoginSenha(int nivelAcesso);
-int modificarEquipamento(Equipamentos vetor[], int index, int nivelAcesso);
-void adicionarEquipamento(Equipamentos vetor[], int *n, int nivelAcesso);
-void editarEquipamento(Equipamentos vetor[], int *n, int nivelAcesso);
+int login_senha();
+void configurar_login_senha(int nivelAcesso);
+int modificar_equipamento(Equipamentos vetor[], int index, int nivelAcesso);
+void adicionar_equipamento(Equipamentos vetor[], int *n, int nivelAcesso);
+void editar_equipamento(Equipamentos vetor[], int *n, int nivelAcesso);
 void recursao(Equipamentos vetor[], int index, int n);
-void removerEquipamento(Equipamentos vetor[], int *n, int nivelAcesso);
+void remover_equipamento(Equipamentos vetor[], int *n, int nivelAcesso);
 int lista(Equipamentos vetor[], int j);
-int contaEquipamentos(Equipamentos vetor[]);
-void listarEquipamentos(Equipamentos vetor[], int *n, int nivelAcesso);
-void buscarPorFabricante(Equipamentos vetor[], int *n, int nivelAcesso);
-void listarEquipamentosPorUso(Equipamentos vetor[], int *n, int nivelAcesso);
-void salvarDadosEmArquivo(Equipamentos vetor[], int *n, int nivelAcesso);
-void carregarDadosDoArquivo(Equipamentos vetor[], int *n, int nivelAcesso);
-void abrirOutrosFormatos(Equipamentos vetor[], int *n, int nivelAcesso);
-void verificarAlteracoes(Equipamentos vetor[], int *n, int nivelAcesso);
-void listarUsuarios(int nivelAcesso);
+int contar_equipamentos(Equipamentos vetor[]);
+void listar_equipamentos(Equipamentos vetor[], int *n, int nivelAcesso);
+void buscar_por_fabricante(Equipamentos vetor[], int *n, int nivelAcesso);
+void listar_equipamentosPorUso(Equipamentos vetor[], int *n, int nivelAcesso);
+void salvar_dados_em_arquivo(Equipamentos vetor[], int *n, int nivelAcesso);
+void carregar_dados_do_arquivo(Equipamentos vetor[], int *n, int nivelAcesso);
+void abrir_outros_formatos(Equipamentos vetor[], int *n, int nivelAcesso);
+void verificar_alteracoes(Equipamentos vetor[], int *n, int nivelAcesso);
+void listar_usuarios(int nivelAcesso);
 
 #endif
