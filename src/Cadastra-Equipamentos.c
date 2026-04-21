@@ -7,29 +7,29 @@
 #include "cadastra_equipamentos.h"
 
 int main(int argc, char *argv[]){
-    setlocale(LC_ALL, "Portuguese"); // Configura a localidade para Português do Brasil, garantindo a exibição correta de caracteres acentuados.
-    setlocale(LC_NUMERIC, "C"); // Evita a conversão de pontos decimais para vírgulas, facilitando a impressão de dados para arquivos CSV.
+    setlocale(LC_ALL, "Portuguese");
+    setlocale(LC_NUMERIC, "C"); // Evita a conversão de pontos decimais para vírgulas, facilitando a impressão de dados em arquivos CSV.
     system("cls || clear"); // Útil para limpar a tela em sistemas Windows e Unix, respectivamente.
 
-    FILE *arq = fopen("Equipamentos.txt", "r"); // Será feito um teste de existência do arquivo.
     int n=0; // Variável que vai fazer a contagem de quantos equipamentos estão cadastrados, importante para se usar nos loops.
     int confirmacao;
-    Equipamentos vetor[MAX_EQUIPAMENTOS]; // Vetor responsável por armazenar os equipamentos já cadastrados.
+    Equipamentos vetor[MAX_EQUIPAMENTOS];
 
-    int nivelAcesso = loginSenha();
-    if (nivelAcesso == -1){
+    int nivelAcesso = login_senha();
+    if (nivelAcesso == -1) {
         return 0;
     }
 
     fprintf(stdout, "\nBem vindo ao Cadastra-Equipamentos.\nCertifique-se de que fechou o programa quando for embora!!!\n");
 
-    while (arq == NULL){ // Testa se o arquivo existe ou não
-        fprintf(stderr, "ATENÇÃO! Não há arquivo .txt a ser aberto. Deseja criar um? S/N ");
+    FILE *arq = fopen("Equipamentos.txt", "r");
+    while (arq == NULL) {
+        fprintf(stderr, "ATENÇÃO! Não há arquivo .txt de equipamentos a ser aberto. Deseja criar um? S/N ");
         scanf("\n%c", &confirmacao);
-        if (confirmacao == 'n' || confirmacao == 'N'){
+        if (confirmacao == 'n' || confirmacao == 'N') {
         fprintf(stdout, "Saindo do Cadastra-Equipamentos...");
         return 0;
-        } else if (confirmacao == 's' || confirmacao == 'S'){
+        } else if (confirmacao == 's' || confirmacao == 'S') {
         arq = fopen("Equipamentos.txt", "w");
         fclose(arq);
         } else {
@@ -60,53 +60,53 @@ int main(int argc, char *argv[]){
         scanf(" %c", &input);
         switch (input){ 
             case '1':
-                adicionarEquipamento(vetor, &n, nivelAcesso);
+                adicionar_equipamento(vetor, &n, nivelAcesso);
                 break;
 
             case '2':
-                editarEquipamento(vetor, &n, nivelAcesso);
+                editar_equipamento(vetor, &n, nivelAcesso);
                 break;
 
             case '3':
-                removerEquipamento(vetor, &n, nivelAcesso);
+                remover_equipamento(vetor, &n, nivelAcesso);
                 break;
 
             case '4':
-                listarEquipamentos(vetor, &n, nivelAcesso);
+                listar_equipamentos(vetor, &n, nivelAcesso);
                 break;
                 
             case '5':
-                buscarPorFabricante(vetor, &n, nivelAcesso);
+                buscar_por_fabricante(vetor, &n, nivelAcesso);
                 break;
 
             case '6':
-                listarEquipamentosPorUso(vetor, &n, nivelAcesso);
+                listar_equipamentosPorUso(vetor, &n, nivelAcesso);
                 break;
 
             case '7':
-                salvarDadosEmArquivo(vetor, &n, nivelAcesso);
+                salvar_dados_em_arquivo(vetor, &n, nivelAcesso);
                 break;
 
             case '8':
-                carregarDadosDoArquivo(vetor, &n, nivelAcesso);
+                carregar_dados_do_arquivo(vetor, &n, nivelAcesso);
                 break;
 
             case '9':
-                configurarLoginSenha(nivelAcesso);
+                configurar_login_senha(nivelAcesso);
                 break;
 
             case '0':
-                listarUsuarios(nivelAcesso);
+                listar_usuarios(nivelAcesso);
                 break;
 
             case 'q':
             case 'Q':
-                verificarAlteracoes(vetor, &n, nivelAcesso);
+                verificar_alteracoes(vetor, &n, nivelAcesso);
                 break;
 
             case 'w':
             case 'W':
-                abrirOutrosFormatos(vetor, &n, nivelAcesso);
+                abrir_outros_formatos(vetor, &n, nivelAcesso);
                 break;
 
             case 'c':
