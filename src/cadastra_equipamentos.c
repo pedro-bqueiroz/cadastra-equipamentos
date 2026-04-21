@@ -139,7 +139,7 @@ void configurar_login_senha(int nivelAcesso){ // Oferece opções internas de co
             fgets(login, sizeof(login), stdin);
             login[strcspn(login, "\r\n")] = 0;
 
-            for(i = 0; i < MAX_USUARIOS; i++) {
+            for (i = 0; i < MAX_USUARIOS; i++) {
                 if (strcmp(login, usuarios[i].login) == 0) {
                     fprintf(stdout, "Digite o novo login do usuário:\n");
                     fgets(login, sizeof(login), stdin);
