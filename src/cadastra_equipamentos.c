@@ -40,11 +40,6 @@ int login_senha(){ // Estabelece restrições de acesso a funções do programa
 
     fprintf(stdout, "\nLogin:\n");
     fgets(login, sizeof(login), stdin);
-
-    if (strlen(login) > MAX_STRING - 1) {
-        fprintf(stderr, "Login muito longo. Tente novamente.\n");
-        return 0;
-    }
     
     login[strcspn(login, "\r\n")] = 0;
     if (strcmp(login, LOGINSENHAMESTRES) == 0) {
@@ -55,11 +50,6 @@ int login_senha(){ // Estabelece restrições de acesso a funções do programa
 
     fprintf(stdout, "\nSenha:\n");
     fgets(senha, sizeof(senha), stdin);
-
-    if (strlen(senha) > MAX_STRING - 1) {
-        fprintf(stderr, "Senha muito longa. Tente novamente.\n");
-        return 0;
-    }
 
     senha[strcspn(senha, "\r\n")] = 0;
     if (strcmp(senha, LOGINSENHAMESTRES) == 0) {
