@@ -36,7 +36,7 @@ int lista(Equipamentos vetor[], int j);
 int contar_equipamentos(Equipamentos vetor[]);
 void listar_equipamentos(Equipamentos vetor[], int *n, int nivelAcesso);
 void buscar_por_fabricante(Equipamentos vetor[], int *n, int nivelAcesso);
-void listar_equipamentosPorUso(Equipamentos vetor[], int *n, int nivelAcesso);
+void listar_equipamentos_por_uso(Equipamentos vetor[], int *n, int nivelAcesso);
 void salvar_dados_em_arquivo(Equipamentos vetor[], int *n, int nivelAcesso);
 void carregar_dados_do_arquivo(Equipamentos vetor[], int *n, int nivelAcesso);
 void abrir_outros_formatos(Equipamentos vetor[], int *n, int nivelAcesso);
