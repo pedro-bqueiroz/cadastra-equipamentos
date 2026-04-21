@@ -80,7 +80,7 @@ int main(int argc, char *argv[]){
                 break;
 
             case '6':
-                listar_equipamentosPorUso(vetor, &n, nivelAcesso);
+                listar_equipamentos_por_uso(vetor, &n, nivelAcesso);
                 break;
 
             case '7':
