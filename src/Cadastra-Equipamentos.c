@@ -4,6 +4,7 @@
 #include <ctype.h>
 #include <locale.h>
 #include <sys/stat.h>
+
 #include "cadastra_equipamentos.h"
 
 int main(int argc, char *argv[]){
